@@ -1,6 +1,16 @@
-let app = require('./app');
+// let app = require('./app');
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+// let db = require('./database/index');
+
+let app = express();
 let port = process.env.PORT || 3700;
 
-app.get('/', (req, res) => res.send('It works!'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+require('./controllers/authController')(app);
 
 app.listen(port, () => console.log('Listen http://127.0.0.1:' + port));
