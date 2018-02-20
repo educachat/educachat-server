@@ -1,24 +1,25 @@
 let express = require('express');
 let router = express.Router();
-let bodyParser = require('body-parser');
+const authMiddleware = require('../middlewares/auth');
+// let bodyParser = require('body-parser');
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
+// router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.json());
+router.use(authMiddleware);
 let User = require('../models/User');
 
-// Criando novo usuário
-router.post('/', (req, res) => {
-  User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  },
-  (err, user) => {
-    if (err) return res.status(500).send('Aconteceu algum problema ao adicionar a informação no banco de dados.');
-    res.status(200).send(user);
-  });
-});
+// // Criando novo usuário
+// router.post('/', (req, res) => {
+//   User.create({
+//     name: req.body.name,
+//     email: req.body.email,
+//     password: req.body.password
+//   },
+//   (err, user) => {
+//     if (err) return res.status(500).send('Aconteceu algum problema ao adicionar a informação no banco de dados.');
+//     res.status(200).send(user);
+//   });
+// });
 
 router.get('/', (req, res) => {
   User.find({}, (err, users) => {
@@ -49,4 +50,4 @@ router.put('/:id', (req, res) => {
   })
 });
 
-module.exports = router;
+module.exports = app => app.use('/users', router);
