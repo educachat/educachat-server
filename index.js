@@ -13,4 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 require('./controllers/authController')(app);
 
+app.get('/', (req, res) => {
+  console.log('root');
+  res.send('Ok');
+});
+
 app.listen(port, () => console.log('Listen http://127.0.0.1:' + port));
