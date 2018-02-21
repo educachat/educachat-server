@@ -17,9 +17,9 @@ function generateToken(params = {}) {
 router.post('/register', async (req, res) => {
 
   const { email } = req.body;
-  
+
   try {
-    
+
     if (await User.findOne({ email })) {
       return res.status(400).send({ error: 'Email já cadastrado' });
     }
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
       user,
       token: generateToken({ id: user._id }),
     });
-  
+
   } catch (err) {
     res.status(400).send({ error: 'Falha no Registro' });
   }
@@ -42,7 +42,7 @@ router.post('/authenticate', async (req, res) => {
 
   const { email, password } = req.body;
   const user = await User.findOne({ email }).select('+password');
-  
+
   if(!user)
     return res.status(400).send({ error: 'Usuário não encontrado' });
 
@@ -51,7 +51,7 @@ router.post('/authenticate', async (req, res) => {
 
   user.password = undefined;
 
-  res.send({ 
+  res.send({
     user,
     token: generateToken({ id: user._id }),
   });
@@ -67,9 +67,9 @@ router.post('/forgot_password', async (req, res) => {
 
     if(!user)
       return res.status(400).send({ error: 'Usuário não encontrado' });
-    
+
     const token = crypto.randomBytes(20).toString('hex');
-    
+
     const now = new Date();
     now.setHours(now.getHours() + 1);
 
@@ -91,10 +91,37 @@ router.post('/forgot_password', async (req, res) => {
     });
 
     return res.status(200).send('Email enviado.')
-    
+
   } catch (err) {
     res.status(400).send({ error: 'Erro em esqueci minha senha, tente novamente' });
   }
 });
+
+router.post('/reset_password', async (req, res) => {
+  const { email, token, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email })
+      .select('+passwordResetToken passwordResetExpires');
+
+    if(!user)
+      return res.status(400).send({ error: 'Usuário não encontrado' });
+
+    if (token !== user.passwordResetToken)
+      return res.status(400).send({ error: 'Token inválido' });
+
+    const now = new Date();
+    if (now > user.passwordResetExpires)
+      return res.status(400).send({ error: 'Token expirado' });
+
+    user.password = password;
+    await user.save();
+
+    res.send('Senha alterada');
+
+  } catch (err) {
+    res.status(400).send({ error: 'Não foi possível resetar a senha, tente novamente' });
+  }
+})
 
 module.exports = app => app.use('/auth', router);
