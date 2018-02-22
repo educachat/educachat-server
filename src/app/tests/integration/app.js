@@ -4,7 +4,7 @@ describe('Routes Users', () => {
     "createdAt": "2018-02-20T17:10:19.544Z",
 		"_id": "5a8c5688a1847e2098ca2920",
 		"name": "Rafael",
-		"email": "rafaelfms1@gmail.com",
+		"email": "test1@gmail.com",
 		"__v": 0
   };
 
