@@ -1,14 +1,6 @@
 describe('Routes Users', () => {
 
-  const defaultUser = {
-    "createdAt": "2018-02-20T17:10:19.544Z",
-		"_id": "5a8c5688a1847e2098ca2920",
-		"name": "Rafael",
-		"email": "test1@gmail.com",
-		"__v": 0
-  };
-
-  const user = {
+  let user = {
     "email": "test1@gmail.com",
     "name": "Rafael",
     "password": "123456",
@@ -19,8 +11,6 @@ describe('Routes Users', () => {
     "password": "123456",
   };
 
-  var token = null;
-
   describe('Route GET /users', () => {
 
     it('should create user', done => {
@@ -29,7 +19,8 @@ describe('Routes Users', () => {
         .send(userLogin)
         .expect(200)
         .end((err, res) => {
-          token = res.body.token;
+          user.id = res.body.id;
+          user.token = res.body.token;
           done();
         });
     });
@@ -62,8 +53,8 @@ describe('Routes Users', () => {
         .expect('Content-Type', /json/)
         .end((err, res) => {
 
-          expect(res.body[1].name).to.be.eql(defaultUser.name);
-          expect(res.body[1].id).to.be.eql(defaultUser.id);
+          expect(res.body[1].name).to.be.eql(user.name);
+          expect(res.body[1].id).to.be.eql(user.id);
           done(err);
 
         });
