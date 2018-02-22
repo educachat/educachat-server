@@ -16,10 +16,9 @@ describe('Routes Users', () => {
     it('should create user', done => {
       request
         .post('/auth/register')
-        .send(userLogin)
+        .send(user)
         .expect(200)
         .end((err, res) => {
-          user.id = res.body.id;
           user.token = res.body.token;
           done();
         });
@@ -35,7 +34,7 @@ describe('Routes Users', () => {
         });
     });
 
-    before(function(done) {
+    beforeEach(function(done) {
       request
         .post('/auth/authenticate')
         .send(userLogin)
@@ -52,7 +51,6 @@ describe('Routes Users', () => {
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-
           expect(res.body[0].name).to.be.eql(user.name);
           expect(res.body[0].id).to.be.eql(user.id);
           done(err);
