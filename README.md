@@ -1,4 +1,4 @@
-# EducaChat
+# EducaChat [![Build Status](https://travis-ci.org/educachat/educachat-server.svg?branch=master)](https://travis-ci.org/educachat/educachat-server)
 
 ## Documentação da API
 
