@@ -53,8 +53,8 @@ describe('Routes Users', () => {
         .expect('Content-Type', /json/)
         .end((err, res) => {
 
-          expect(res.body[1].name).to.be.eql(user.name);
-          expect(res.body[1].id).to.be.eql(user.id);
+          expect(res.body[0].name).to.be.eql(user.name);
+          expect(res.body[0].id).to.be.eql(user.id);
           done(err);
 
         });
