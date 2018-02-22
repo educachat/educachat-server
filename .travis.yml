@@ -1,3 +1,10 @@
 language: node_js
+
+before_script:
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
 node_js:
- - "node"
+  - "node"
+
+services:
+  - mongodb
