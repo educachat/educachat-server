@@ -8,12 +8,31 @@ describe('Routes Users', () => {
 		"__v": 0
   };
 
-  const userLogin = {
-    "email": "rafaelfms1@gmail.com",
+  const user = {
+    "email": "test1@gmail.com",
+    "name": "Rafael",
     "password": "123456",
   };
 
+  const userLogin = {
+    "email": "test1@gmail.com",
+    "password": "123456",
+  };
+
+  var token = null;
+
   describe('Route GET /users', () => {
+
+    it('should create user', done => {
+      request
+        .post('/auth/register')
+        .send(userLogin)
+        .expect(200)
+        .end((err, res) => {
+          token = res.body.token;
+          done();
+        });
+    });
 
     it('should return token not informed', done => {
       request
@@ -25,14 +44,12 @@ describe('Routes Users', () => {
         });
     });
 
-    var token = null;
-
     before(function(done) {
       request
         .post('/auth/authenticate')
         .send(userLogin)
         .end(function(err, res) {
-          token = res.body.token; // Or something
+          token = res.body.token;
           done();
         });
     });
