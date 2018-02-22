@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test-integration": "mocha --opts src/app/tests/integration/mocha.opts src/app/tests/integration/*.js"
+    "test-integration": "nyc mocha --opts src/app/tests/integration/mocha.opts src/app/tests/integration/*.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
     "supertest": "^3.0.0"
   }
 }

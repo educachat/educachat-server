@@ -1,6 +1,18 @@
 
 # Created by https://www.gitignore.io/api/node,linux,macos,windows
 
+### nyc ###
+# Code Coverage Test
+
+.nyc_output
+coverage
+node_modules
+test/build/
+.self_coverage
+*.covered.js
+*.swp
+needs-transpile.js
+
 ### Linux ###
 *~
 

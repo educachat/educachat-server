@@ -1,4 +1,4 @@
---require src/app/tests/integration/helpers.js
+--require ./src/app/tests/integration/helpers.js
 --reporter spec
 --slow 5000
 --timeout 10000
