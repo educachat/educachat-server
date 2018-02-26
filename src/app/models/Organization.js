@@ -8,9 +8,6 @@ let OrganizationSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    unique: true,
-    required: true,
-    lowercase: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
